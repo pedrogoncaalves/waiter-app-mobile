@@ -14,11 +14,14 @@ export function Main() {
         <>
         <Container>
             <Header/>
+
             <CategoriesContainer>
+                <Categories/>
 
             </CategoriesContainer>
 
             <MenuContainer>
+                <Menu/>
 
             </MenuContainer>
         </Container>
