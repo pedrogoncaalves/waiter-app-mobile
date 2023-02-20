@@ -1,7 +1,1 @@
 
-
-export function Menu() {
-    return(
-
-    );
-}

@@ -7,6 +7,9 @@ import { Text } from "../Text"
 export function Categories() {
     return(
        <FlatList
+       horizontal
+       showsHorizontalScrollIndicator={false}
+       contentContainerStyle={{ paddingRight: 24}}
        data={categories}
        keyExtractor={category => category._id}
        renderItem={({item: category}) => (
