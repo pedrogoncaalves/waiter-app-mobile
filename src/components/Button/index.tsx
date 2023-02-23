@@ -10,7 +10,8 @@ interface ButtonProps {
 export function Button({children, onPress, disabled}: ButtonProps) {
     return(
         <Container >
-            <Text weight="600" color="#fff">{children} disabled={disabled}</Text>
+            <Text weight="600" color="#fff"
+            disabled={disabled}>{children} </Text>
         </Container>
     )
 }
