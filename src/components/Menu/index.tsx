@@ -5,9 +5,22 @@ import { products } from '../../mocks/products'
 import { formatCurrency } from "../../utils/formatCurrency";
 import { Product, ProductImage, ProductDetails, Separator, PlusButton} from './styles';
 import { PlusCircle } from "../Icons/PlusCircle";
+import { ProductModal } from "../ProductModal";
+import { useState } from "react";
 
 export function Menu() {
+
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
     return(
+
+        <>
+        <ProductModal
+        visible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+
+
+        />
         <FlatList
         data={products}
         style={{ marginTop: 32}}
@@ -15,7 +28,7 @@ export function Menu() {
         ItemSeparatorComponent={Separator}
         keyExtractor={product => product._id}
         renderItem={({ item: product}) => (
-            <Product>
+            <Product onPress={() => setIsModalVisible(true)}>
                 <ProductImage
                 source={{
                     uri: `http://exp://192.168.100.3:19000/uploads/${product.imagePath}`
@@ -34,6 +47,7 @@ export function Menu() {
             </Product>
         )}
         />
+        </>
 
     );
 }

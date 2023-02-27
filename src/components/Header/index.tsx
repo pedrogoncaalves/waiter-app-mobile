@@ -5,10 +5,11 @@ import { TouchableOpacity } from "react-native";
 
 interface HeaderProps {
     selectedTable: string;
+    onCancelOrder: () => void;
 }
 
 
-export const Header = ({ selectedTable }: HeaderProps) => {
+export const Header = ({ selectedTable, onCancelOrder }: HeaderProps) => {
     return(
         <Container>
            {!selectedTable && (
@@ -25,7 +26,7 @@ export const Header = ({ selectedTable }: HeaderProps) => {
             <Content>
                 <OrderHeader>
                 <Text size={24} weight="600">Pedido</Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={onCancelOrder}>
                     <Text color="#D73035" weight="600" size={14}>cancelar pedido</Text>
                 </TouchableOpacity>
                 </OrderHeader>
