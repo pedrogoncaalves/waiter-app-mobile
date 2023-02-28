@@ -3,14 +3,22 @@ import { TouchableOpacity, View } from "react-native";
 import { FlatList } from "react-native";
 import { products } from '../../mocks/products'
 import { formatCurrency } from "../../utils/formatCurrency";
-import { Product, ProductImage, ProductDetails, Separator, PlusButton} from './styles';
+import { ProductContainer, ProductImage, ProductDetails, Separator, PlusButton} from './styles';
 import { PlusCircle } from "../Icons/PlusCircle";
 import { ProductModal } from "../ProductModal";
 import { useState } from "react";
+import { Product } from '../types/Product'
 
 export function Menu() {
 
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState<null | Product>(null);
+
+
+    function handleOpenModal(product: Product) {
+        setIsModalVisible(true)
+        setSelectedProduct(product)
+    }
 
     return(
 
@@ -18,6 +26,7 @@ export function Menu() {
         <ProductModal
         visible={isModalVisible}
         onClose={() => setIsModalVisible(false)}
+        product={selectedProduct}
 
 
         />
@@ -28,7 +37,7 @@ export function Menu() {
         ItemSeparatorComponent={Separator}
         keyExtractor={product => product._id}
         renderItem={({ item: product}) => (
-            <Product onPress={() => setIsModalVisible(true)}>
+            <ProductContainer onPress={() => setIsModalVisible(true)}>
                 <ProductImage
                 source={{
                     uri: `http://exp://192.168.100.3:19000/uploads/${product.imagePath}`
@@ -44,7 +53,7 @@ export function Menu() {
                 <PlusButton>
                     <PlusCircle/>
                 </PlusButton>
-            </Product>
+            </ProductContainer>
         )}
         />
         </>
