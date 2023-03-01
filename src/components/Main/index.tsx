@@ -12,7 +12,7 @@ import { Menu } from "../Menu";
 import { Button } from "../Button";
 import { TableModal } from "../TableModal";
 import { useState } from 'react'
-
+import { Cart } from "../Cart";
 
 export function Main() {
 
@@ -52,6 +52,10 @@ export function Main() {
                     <Button onPress={() => setIsModalVisible(true)}>
                     Novo pedido
                 </Button>
+                )}
+
+                {selectedTable && (
+                    <Cart/>
                 )}
             </FooterContainer>
 

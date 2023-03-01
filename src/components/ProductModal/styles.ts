@@ -27,6 +27,7 @@ export const Header = styled.View`
 
 export const IngredientsContainer = styled.View`
  margin-top: 32px;
+ flex: 1;
 `
 
 export const Ingredient = styled.View`
@@ -37,5 +38,22 @@ flex-direction: row;
 align-items: center;
 margin-bottom: 4px;
 `;
+''
+export const Footer = styled.View`
+  min-height: 110px;
+  background: #fff;
+  padding: 16px 24px;
+`;
+
+
+export const FooterContainer = styled.SafeAreaView`
+flex-direction: row;
+align-items: center;
+justify-content: space-between;
+`;
+
+export const PriceContainer = styled.View`
+
+`
 
 
