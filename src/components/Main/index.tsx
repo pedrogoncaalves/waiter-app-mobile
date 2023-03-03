@@ -13,11 +13,23 @@ import { Button } from "../Button";
 import { TableModal } from "../TableModal";
 import { useState } from 'react'
 import { Cart } from "../Cart";
+import { CartItem } from "../types/CartItem";
+import { products } from "../../mocks/products";
 
 export function Main() {
 
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedTable, setSelectedTable] = useState('');
+    const [cartItem, setCartItem] = useState<CartItem[]>([
+        {
+            quantity: 1,
+            product: products[0]
+        },
+        {
+            quantity: 2,
+            product: products[1]
+        }
+    ]);
 
 
     function handleSaveTable(table: string) {
@@ -55,7 +67,7 @@ export function Main() {
                 )}
 
                 {selectedTable && (
-                    <Cart/>
+                    <Cart cartItems={cartItem}/>
                 )}
             </FooterContainer>
 
