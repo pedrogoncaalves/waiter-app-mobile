@@ -5,6 +5,9 @@ import styled from "styled-components/native"
 
 export const Item = styled.View`
 padding: 8px 0;
+flex-direction: row;
+align-items: center;
+justify-content: space-between;
 
 `
 export const ProductContainer = styled.View`
@@ -12,7 +15,10 @@ flex-direction: row;
 
 `
 
-export const Actions = styled.View``
+export const Actions = styled.View`
+flex-direction: row;
+
+`
 
 
 
@@ -27,6 +33,19 @@ margin-left: 12px;
 
 `
 
-export const ProductDetails = styled.view`
+export const ProductDetails = styled.View`
+
+`
+
+export const Summary = styled.View`
+flex-direction: row;
+align-items: center;
+justify-content: space-between;
+
+`
+export const TotalContainer = styled.View`
+
+margin-right: 32px;
+flex: 1;
 
 `
