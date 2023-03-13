@@ -39,6 +39,7 @@ export function Main() {
 
     function handleCancelOrder() {
         setSelectedTable('');
+        setCartItem([]);
     }
 
     function handleAddToCart(product: Product) {
@@ -63,9 +64,33 @@ export function Main() {
                 quantity: item.quantity + 1,
             };
             return newCartItems;
+        })};
+
+    function handleDecrementCartItem(product: Product) {
+        setCartItem((prevState) => {
+            const itemIndex = prevState.findIndex
+            (cartItem => cartItem.product._id === product._id);
+
+            const item = prevState[itemIndex];
+            const newCartItems = [...prevState];
+
+            if (item.quantity === 1) {
+                newCartItems.splice(itemIndex, 1);
+
+                return newCartItems;
+            }
+
+            newCartItems[itemIndex] = {
+                ...item,
+                quantity: item.quantity - 1,
+            };
+
+            return newCartItems;
         })
 
     }
+
+
 
     return(
         <>
@@ -96,7 +121,8 @@ export function Main() {
                 {selectedTable && (
                     <Cart
                     cartItems={cartItem}
-                    onAdd={handleAddToCart}/>
+                    onAdd={handleAddToCart}
+                    onDecrement={handleDecrementCartItem}/>
                 )}
             </FooterContainer>
 
