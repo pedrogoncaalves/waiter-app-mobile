@@ -1,5 +1,6 @@
 import { Text } from "../Text";
-
+import axios from "axios";
+import { useEffect } from 'react'
 import { Container,
 CategoriesContainer,
 MenuContainer,
@@ -16,21 +17,26 @@ import { Cart } from "../Cart";
 import { CartItem } from "../types/CartItem";
 import { products } from "../../mocks/products";
 import { Product } from "../types/Product";
-
+import { ICategory } from "../types/Category";
 export function Main() {
-
+    const [isLoading, setIsLoading] = useState(true);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedTable, setSelectedTable] = useState('');
-    const [cartItem, setCartItem] = useState<CartItem[]>([
-        {
-            quantity: 1,
-            product: products[0]
-        },
-        {
-            quantity: 2,
-            product: products[1]
-        }
-    ]);
+    const [cartItem, setCartItem] = useState<CartItem[]>([]);
+    const [categories, setCategories] = useState<ICategory[]>([]);
+    const [products, setProducts] = useState<Product[]>([]);
+
+    useEffect(() => {
+       Promise.all([
+        axios.get('http://192.168.100.3:19000/categories'),
+        axios.get('http://192.168.100.3:19000/products'),
+       ]).then(([categoriesResponse, productsResponse]) => {
+        setCategories(categoriesResponse.data);
+        setProducts(productsResponse.data);
+        setIsLoading(false);
+       })
+
+    }, []);
 
 
     function handleSaveTable(table: string) {

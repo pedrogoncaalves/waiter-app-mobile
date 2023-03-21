@@ -3,8 +3,13 @@ import { categories } from "../../mocks/categories"
 import { Category, Icon } from "./styles"
 import { Text } from "../Text"
 import { useState } from 'react';
+import { ICategory } from "../types/Category";
 
-export function Categories() {
+interface CategoriesProps {
+    categories: ICategory[];
+}
+
+export function Categories({ categories }: CategoriesProps) {
 
     const [selectedCategory, setSelectedCategory] = useState('');
 
