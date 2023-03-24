@@ -1,5 +1,4 @@
 import { Text } from "../Text";
-import axios from "axios";
 import { useEffect } from 'react'
 import { Container,
 CategoriesContainer,
@@ -18,6 +17,8 @@ import { CartItem } from "../types/CartItem";
 import { products } from "../../mocks/products";
 import { Product } from "../types/Product";
 import { ICategory } from "../types/Category";
+import { api } from "../../utils/api";
+
 export function Main() {
     const [isLoading, setIsLoading] = useState(true);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -28,8 +29,8 @@ export function Main() {
 
     useEffect(() => {
        Promise.all([
-        axios.get('http://192.168.100.3:19000/categories'),
-        axios.get('http://192.168.100.3:19000/products'),
+        api.get('/categories'),
+        api.get('/products'),
        ]).then(([categoriesResponse, productsResponse]) => {
         setCategories(categoriesResponse.data);
         setProducts(productsResponse.data);
@@ -37,6 +38,16 @@ export function Main() {
        })
 
     }, []);
+
+    async function handleSelectCategory(categoryId: string) {
+        const route = !categoryId
+        ? '/products'
+        : `/categories/${categoryId}/products`
+
+
+        const { data } = await api.get(route)
+        setProducts(data)
+    }
 
 
     function handleSaveTable(table: string) {
@@ -107,7 +118,10 @@ export function Main() {
             />
 
             <CategoriesContainer>
-                <Categories/>
+                <Categories
+                onSelectCategory={handleSelectCategory}
+                categories={categories}
+                />
 
             </CategoriesContainer>
 
