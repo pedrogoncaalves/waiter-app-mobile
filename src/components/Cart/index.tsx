@@ -112,7 +112,9 @@ export function Cart({cartItems, onAdd, onDecrement, onConfirmOrder}: CartProps)
                         )}
                     </TotalContainer>
 
-                    <Button onPress={handleConfirmedModal} disabled={cartItems.length === 0} loading={isLoading}>
+                    <Button onPress={handleConfirmedModal}
+                     disabled={cartItems.length === 0}
+                      loading={isLoading}>
                         Confirmar pedido
                     </Button>
                  </Summary>

@@ -4,7 +4,7 @@ import { Container,
 CategoriesContainer,
 MenuContainer,
 Footer,
-FooterContainer}
+FooterContainer, CenteredContainer}
 from "./styles";
 import { Categories } from "../Categories";
 import { Header } from "../Header";
@@ -18,6 +18,7 @@ import { products } from "../../mocks/products";
 import { Product } from "../types/Product";
 import { ICategory } from "../types/Category";
 import { api } from "../../utils/api";
+import { ActivityIndicator } from "react-native";
 
 export function Main() {
     const [isLoading, setIsLoading] = useState(true);
@@ -26,6 +27,7 @@ export function Main() {
     const [cartItem, setCartItem] = useState<CartItem[]>([]);
     const [categories, setCategories] = useState<ICategory[]>([]);
     const [products, setProducts] = useState<Product[]>([]);
+    const [isLoadingProducts, setIsLoadingProducts] = useState(false)
 
     useEffect(() => {
        Promise.all([
@@ -44,9 +46,12 @@ export function Main() {
         ? '/products'
         : `/categories/${categoryId}/products`
 
+        setIsLoadingProducts(true);
+
 
         const { data } = await api.get(route)
-        setProducts(data)
+        setProducts(data);
+        setIsLoadingProducts(false);
     }
 
 
@@ -107,8 +112,6 @@ export function Main() {
 
     }
 
-
-
     return(
         <>
         <Container>
@@ -117,23 +120,36 @@ export function Main() {
             onCancelOrder={handleResetOrder}
             />
 
-            <CategoriesContainer>
-                <Categories
-                onSelectCategory={handleSelectCategory}
-                categories={categories}
-                />
+            {isLoading && (
+                <CenteredContainer>
+                     <ActivityIndicator color={"#D73035"} size="large"/>
+                </CenteredContainer>
+            )}
 
-            </CategoriesContainer>
+            {!isLoading && (
+                <>
+                 <CategoriesContainer>
+                 <Categories
+                 onSelectCategory={handleSelectCategory}
+                 categories={categories}
+                 />
 
-            <MenuContainer>
-                <Menu onAddToCart={handleAddToCart}/>
+             </CategoriesContainer>
 
-            </MenuContainer>
+             <MenuContainer>
+                 <Menu onAddToCart={handleAddToCart}/>
+
+             </MenuContainer>
+             </>
+
+            )}
+
+
         </Container>
         <Footer>
             <FooterContainer>
                 {!selectedTable && (
-                    <Button onPress={() => setIsModalVisible(true)}>
+                    <Button onPress={() => setIsModalVisible(true)} disabled={isLoading}>
                     Novo pedido
                 </Button>
                 )}
