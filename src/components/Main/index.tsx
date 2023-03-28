@@ -6,6 +6,7 @@ MenuContainer,
 Footer,
 FooterContainer, CenteredContainer}
 from "./styles";
+
 import { Categories } from "../Categories";
 import { Header } from "../Header";
 import { Menu } from "../Menu";
@@ -14,11 +15,11 @@ import { TableModal } from "../TableModal";
 import { useState } from 'react'
 import { Cart } from "../Cart";
 import { CartItem } from "../types/CartItem";
-import { products } from "../../mocks/products";
 import { Product } from "../types/Product";
 import { ICategory } from "../types/Category";
 import { api } from "../../utils/api";
 import { ActivityIndicator } from "react-native";
+import { Empty } from "../Icons/Empty";
 
 export function Main() {
     const [isLoading, setIsLoading] = useState(true);
@@ -136,11 +137,23 @@ export function Main() {
 
              </CategoriesContainer>
 
-             <MenuContainer>
-                 <Menu onAddToCart={handleAddToCart}/>
+             {products.length > 0 ? (
+                <MenuContainer>
+                <Menu onAddToCart={handleAddToCart}/>
 
-             </MenuContainer>
-             </>
+            </MenuContainer>
+
+
+             ) : (
+                 <CenteredContainer>
+                    <Empty/>
+
+                    <Text color="#666" style={{ marginTop: 24}}>
+                        Nenhum produto foi encontrado!
+                    </Text>
+                 </CenteredContainer>
+             )}
+              </>
 
             )}
 
@@ -159,7 +172,8 @@ export function Main() {
                     cartItems={cartItem}
                     onAdd={handleAddToCart}
                     onDecrement={handleDecrementCartItem}
-                    onConfirmOrder={handleResetOrder}/>
+                    onConfirmOrder={handleResetOrder}
+                    selectedTable={selectedTable}/>
                 )}
             </FooterContainer>
 
